@@ -1,6 +1,7 @@
  FROM python:2
  RUN apt-get update -qq && apt-get install -y wkhtmltopdf xvfb && apt-get install -f
 
+ RUN sed  '/st_mysql_options options;/a unsigned int reconnect;' /usr/include/mysql/mysql.h -i.bkp
  # configure wkhtmltopdf
  RUN printf '#!/bin/bash\nxvfb-run -a --server-args="-screen 0, 1024x768x24" /usr/bin/wkhtmltopdf -q $*' > /usr/bin/wkhtmltopdf.sh
  RUN chmod a+x /usr/bin/wkhtmltopdf.sh
